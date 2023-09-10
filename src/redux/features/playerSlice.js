@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
-
-
 const initialState = {
     currentSongs: [],
     currentIndex: 0,
@@ -10,9 +7,9 @@ const initialState = {
     isPlaying: false,
     activeSong: {},
     genreListId: '',
-    isLike: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    isLike: localStorage.getItem("isLike") ? JSON.parse(localStorage.getItem("isLike")):[],
     favorites: localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")):[],
-    favList: localStorage.getItem("favList") ? JSON.parse(localStorage.getItem("favList")):[],
+    favList: [],
 
   };
   
@@ -87,27 +84,73 @@ const playerSlice = createSlice({
         
 
         // },
-        add: (state, action) => {
-            state.favorites.push(action.payload.song);
-            state.favList.push(action.payload.indexFav);
-            // state.isLike = action.payload.updatedCheckedState;
+     
+
+
+        // list: (state, action) => {
+        //     const inList= state.favList.find((item) => item === action.payload.indexFav);
+
+        //         if(!inList ){
+        //             if(action.payload.index != -1){
+        //             state.favorites.push(action.payload.song);
+        //             state.favList.push(action.payload.indexFav);
+                    
+                    
+        //             localStorage.setItem("favList", JSON.stringify(state.favList));
+        //         }
+                
+        //     }else if(inList){
+        //             state.favorites = state.favorites.filter((song) => song.key !== action.payload.song.key);
+        //             state.favList = state.favList.filter((item) => item !== action.payload.i);
+
+                   
+        
+        //             localStorage.setItem("favList", JSON.stringify(state.favList));
             
+        //     }
+
+        
+        list: (state, action) => {
+            const inList= state.favorites.find((song) => song.key === action.payload.song.key);
+
+                if(!inList ){
+                    if(action.payload != -1){
+                    state.favorites.push(action.payload.song);
+                    state.isLike.push(action.payload.i);
+                    localStorage.setItem("isLike", JSON.stringify(state.isLike));
+                    
+                }
+                
+            }else if(inList){
+                    state.favorites = state.favorites.filter((song) => song.key !== action.payload.song.key);
+                    state.isLike = state.favorites.filter((i) => i !== action.payload.song.i);
+                    localStorage.setItem("isLike", JSON.stringify(state.isLike));
+            
+            }
+
             localStorage.setItem("favorites", JSON.stringify(state.favorites));
-            localStorage.setItem("favList", JSON.stringify(state.favList));
-        },
 
-        remove: (state, action) => {
-            state.favorites = state.favorites.filter((song) => song.key !== action.payload.song.key);
-            state.favList = state.favList.filter((index) => index !== action.payload.i);
+    },
+    add: (state, action) => {
+        const inList= state.favorites.find((song) => song.key === action.payload.song.key);
+        if(!inList ){
+        state.favorites.push(action.payload.song);
+        state.favList.push(action.payload.indexFav);
+        }
+        
+        localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    },
 
-            localStorage.setItem("favorites", JSON.stringify(state.favorites));
-            localStorage.setItem("favList", JSON.stringify(state.favList));
-        },
+    remove: (state, action) => {
+        state.favorites = state.favorites.filter((song) => song.key !== action.payload.song.key);
+        state.favList = state.favList.filter((item) => item !== action.payload.i);
 
+        localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    },
         
 
     },
 });
 
-export const { setActiveSong, nextSong, prevSong, playPause, selectGenreListId, remove , add } = playerSlice.actions;
+export const { setActiveSong, nextSong, prevSong, playPause, selectGenreListId, remove , add,list } = playerSlice.actions;
 export default playerSlice.reducer;

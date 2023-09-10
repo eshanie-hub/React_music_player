@@ -12,14 +12,11 @@ const Trending = () => {
   if(isFetching) return <Loader title="Loading songs.." />
   if(error) return <Error />;
 
-  
-
   return (
     <div className="w-full p-16">
       <h2 className="text-2xl font-bold">Trending</h2>
-
-
-      <div className="mt-4 flex flex-col gap-1">
+    
+     <div className="mt-4 flex flex-col gap-1">
           {data?.tracks.slice(0, 5).map((song, i) => (
             <TopPlay
               key={song.key}

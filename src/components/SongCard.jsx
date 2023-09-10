@@ -1,21 +1,17 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {useState, useEffect } from 'react'
+import {useState } from 'react'
 
 import PlayPause from './PlayPause';
 import LikeButton from './LikeButton';
 
-import { playPause, setActiveSong, add, remove, } from '../redux/features/playerSlice';
+import { playPause, setActiveSong, list } from '../redux/features/playerSlice';
 
-const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, like, checked, check, favorites, favList }) => {
-
+const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, check, is }) => {
+  const {favorites} = useSelector((state) => state.player);
   const dispatch = useDispatch();
-  // const [like, setLike] = useState(false);
-  const [checkedState, setCheckedState] = useState(
-    new Array(data?.tracks.length).fill(false)
-  );
- 
+
   const handlePauseClick = () => {
     dispatch(playPause(false));
   };
@@ -25,36 +21,16 @@ const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, like, checked,
     dispatch(playPause(true));
   };
  
+  const [o, setO] = useState(() => {
+    const o = favorites.find((song) => song.key === is);
+    return o;
+  })
 
-  const handleLikeClick = (k) => {
-    const updatedCheckedState = checkedState.map((item, key) => 
-    key === k ? !item : item
-    );
-    // dispatch(favoriteList({song, data, i, isLike}));
-    
-    setCheckedState(updatedCheckedState);
-   
-
-    // const indexFav = updatedCheckedState.indexOf(true);
-    
-    // localStorage.setItem("indexFav", JSON.stringify(indexFav));
-    // localStorage.getItem("indexFav") ? JSON.parse(localStorage.getItem("indexFav")):[];
-    // console.log(indexFav)
-
-    const indexFav = updatedCheckedState.indexOf(true);
-    console.log(indexFav)
-    
-
-    if(indexFav == -1){
-      dispatch(remove({song, data, i, indexFav, updatedCheckedState}));
-      
-    }else if(favList?.filter((i)=> i == indexFav)){
-      // if(indexFav !== -1 ){
-        dispatch(add({song, data, i, indexFav, updatedCheckedState}));
-    }  
-    
+  const handleLikeClick = () => {
+   setO((prevState) => !prevState);
+    dispatch(list({song, data, i,o}));     
   };
-  
+
   return (
     <div className="pt-6">
       <div className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer"> 
@@ -69,16 +45,19 @@ const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, like, checked,
               handlePlay={handlePlayClick}
             />
           </div> 
-          <div className="absolute top-2.5 right-1.5 cursor-pointer hover:text-pink-800">
+         
+          <div className="absolute top-2.5 right-1.5 cursor-pointer hover:text-pink-800 ">
             <LikeButton 
             activeSong={activeSong}
             song={song}
             i={i}
             handleLike={handleLikeClick}
-             checkq={checkedState[i]}
-            // checkq={check}
+            check={isLike}
+            checkq={check}
+            isl={o}
+           
             />
-          </div>
+         </div>
         <img alt="song_img" src={song.images?.coverart}  className="rounded-lg "/>
         </div>
         <div className="p-3">

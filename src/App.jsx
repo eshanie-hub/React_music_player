@@ -11,7 +11,7 @@ const App = () => {
     <div className="flex bg-[#21201E]">
     <SideBar />
     <div className="w-full h-full bg-[#21201E] ">
-    <div className="h-[calc(100vh-99px)] overflow-y-scroll ">
+    <div className="h-[calc(100vh-99px)] overflow-y-scroll">
       <Menu />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -29,12 +29,6 @@ const App = () => {
      )}
 
      </div>
-
-     
-
-  
-    
-  
 
 );
 } 
