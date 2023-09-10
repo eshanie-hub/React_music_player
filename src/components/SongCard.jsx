@@ -6,9 +6,9 @@ import {useState, useEffect } from 'react'
 import PlayPause from './PlayPause';
 import LikeButton from './LikeButton';
 
-import { playPause, setActiveSong, add, remove} from '../redux/features/playerSlice';
+import { playPause, setActiveSong, add, remove, } from '../redux/features/playerSlice';
 
-const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, like }) => {
+const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, like, checked, check, favorites, favList }) => {
 
   const dispatch = useDispatch();
   // const [like, setLike] = useState(false);
@@ -34,15 +34,24 @@ const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, like }) => {
     
     setCheckedState(updatedCheckedState);
    
+
+    // const indexFav = updatedCheckedState.indexOf(true);
+    
+    // localStorage.setItem("indexFav", JSON.stringify(indexFav));
+    // localStorage.getItem("indexFav") ? JSON.parse(localStorage.getItem("indexFav")):[];
+    // console.log(indexFav)
+
     const indexFav = updatedCheckedState.indexOf(true);
-    if(indexFav !== -1 ){
-      dispatch(add({song, data, i, indexFav}));
+    console.log(indexFav)
     
 
-    }else{
-      dispatch(remove({song, data, i, indexFav}));
+    if(indexFav == -1){
+      dispatch(remove({song, data, i, indexFav, updatedCheckedState}));
       
-    }
+    }else if(favList?.filter((i)=> i == indexFav)){
+      // if(indexFav !== -1 ){
+        dispatch(add({song, data, i, indexFav, updatedCheckedState}));
+    }  
     
   };
   
@@ -66,9 +75,8 @@ const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, like }) => {
             song={song}
             i={i}
             handleLike={handleLikeClick}
-            checked={checkedState[i]}
-            isLike={isLike}
-            like={like}
+             checkq={checkedState[i]}
+            // checkq={check}
             />
           </div>
         <img alt="song_img" src={song.images?.coverart}  className="rounded-lg "/>

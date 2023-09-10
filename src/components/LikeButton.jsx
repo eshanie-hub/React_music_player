@@ -1,6 +1,6 @@
 import { FaHeart } from "react-icons/fa";
 
-const LikeButton = ({song, activeSong, handleDislike, handleLike,like, isLike, i }) => 
+const LikeButton = ({song, activeSong, handleDislike, handleLike,like, isLike, i, checkq }) => 
  
   // (isLike ?(
   //   <FaHeart
@@ -17,7 +17,7 @@ const LikeButton = ({song, activeSong, handleDislike, handleLike,like, isLike, i
     return(
       <div>
         <FaHeart className="hover:text-pink-800" 
-        color={isLike  ? 'red' : 'white'} 
+        color={checkq  ? 'red' : 'white'} 
         // onChange={() => setLike((prev) => !prev)}
         onClick={() => handleLike(i)}
         />

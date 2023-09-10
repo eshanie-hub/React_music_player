@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
+
+
 const initialState = {
     currentSongs: [],
     currentIndex: 0,
@@ -7,9 +10,9 @@ const initialState = {
     isPlaying: false,
     activeSong: {},
     genreListId: '',
-    isLike: false,
+    isLike: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
     favorites: localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")):[],
-    favList: [],
+    favList: localStorage.getItem("favList") ? JSON.parse(localStorage.getItem("favList")):[],
 
   };
   
@@ -86,15 +89,19 @@ const playerSlice = createSlice({
         // },
         add: (state, action) => {
             state.favorites.push(action.payload.song);
-            state.isLike = true;
+            state.favList.push(action.payload.indexFav);
+            // state.isLike = action.payload.updatedCheckedState;
+            
             localStorage.setItem("favorites", JSON.stringify(state.favorites));
+            localStorage.setItem("favList", JSON.stringify(state.favList));
         },
 
         remove: (state, action) => {
             state.favorites = state.favorites.filter((song) => song.key !== action.payload.song.key);
-            state.isLike = false;
+            state.favList = state.favList.filter((index) => index !== action.payload.i);
+
             localStorage.setItem("favorites", JSON.stringify(state.favorites));
-        
+            localStorage.setItem("favList", JSON.stringify(state.favList));
         },
 
         

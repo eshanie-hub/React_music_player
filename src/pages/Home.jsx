@@ -8,15 +8,15 @@ import { useGetTopChartsQuery } from '../redux/services/shazamCore';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const {activeSong, isPlaying, isLike} = useSelector((state) => state.player);
+  const {activeSong, isPlaying, isLike, favorites, favList} = useSelector((state) => state.player);
   const { data, isFetching, error  } = useGetTopChartsQuery();
   
   if(isFetching) return <Loader title="Loading songs.." />
   if(error) return <Error />;
-const like = false;
 
+ 
   return (
-    
+
     <div className="w-full p-16">
       <h2 className="text-2xl font-bold">Home</h2>
       <div className="flex flex-wrap sm:justify-start justify-center gap-8 ">
@@ -28,8 +28,8 @@ const like = false;
           activeSong={activeSong}
           data = {data} 
           i={i}
-          isLike={isLike}
-          like={like}
+          favorites={favorites}
+          favList={favList}
         />
       ))}
       </div>
