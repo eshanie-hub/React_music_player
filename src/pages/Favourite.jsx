@@ -5,7 +5,7 @@ import { Error, Loader, SongCard } from '../components';
 import { useGetTopChartsQuery } from '../redux/services/shazamCore';
 
 const Favourite = () => {
-  const {isPlaying,activeSong, favorites, isLike, favList} = useSelector((state) => state.player);
+  const {isPlaying, activeSong, favorites, isLike, favList} = useSelector((state) => state.player);
   const { data, isFetching, error  } = useGetTopChartsQuery();
   
   if(isFetching) return <Loader title="Loading songs.." />

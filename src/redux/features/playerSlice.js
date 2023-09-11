@@ -64,51 +64,6 @@ const playerSlice = createSlice({
         selectGenreListId: (state, action) => {
             state.genreListId = action.payload;
         },
-
-        // favoriteList: (state, action) => {
-           
-        //     if(state.isLike === false ){
-        //         state.favorites.push(action.payload.song);
-            
-        //     state.isLike = true;
-        //     localStorage.setItem("favorites", JSON.stringify(state.favorites));
-        
-        // }else{
-        //     state.favorites = state.favorites.filter((song) => song.key !== action.payload.song.key);
-
-        //     state.isLike = false;
-        //     localStorage.setItem("favorites", JSON.stringify(state.favorites));
-        
-
-        // }
-        
-
-        // },
-     
-
-
-        // list: (state, action) => {
-        //     const inList= state.favList.find((item) => item === action.payload.indexFav);
-
-        //         if(!inList ){
-        //             if(action.payload.index != -1){
-        //             state.favorites.push(action.payload.song);
-        //             state.favList.push(action.payload.indexFav);
-                    
-                    
-        //             localStorage.setItem("favList", JSON.stringify(state.favList));
-        //         }
-                
-        //     }else if(inList){
-        //             state.favorites = state.favorites.filter((song) => song.key !== action.payload.song.key);
-        //             state.favList = state.favList.filter((item) => item !== action.payload.i);
-
-                   
-        
-        //             localStorage.setItem("favList", JSON.stringify(state.favList));
-            
-        //     }
-
         
         list: (state, action) => {
             const inList= state.favorites.find((song) => song.key === action.payload.song.key);
@@ -131,26 +86,9 @@ const playerSlice = createSlice({
             localStorage.setItem("favorites", JSON.stringify(state.favorites));
 
     },
-    add: (state, action) => {
-        const inList= state.favorites.find((song) => song.key === action.payload.song.key);
-        if(!inList ){
-        state.favorites.push(action.payload.song);
-        state.favList.push(action.payload.indexFav);
-        }
-        
-        localStorage.setItem("favorites", JSON.stringify(state.favorites));
-    },
-
-    remove: (state, action) => {
-        state.favorites = state.favorites.filter((song) => song.key !== action.payload.song.key);
-        state.favList = state.favList.filter((item) => item !== action.payload.i);
-
-        localStorage.setItem("favorites", JSON.stringify(state.favorites));
-    },
-        
 
     },
 });
 
-export const { setActiveSong, nextSong, prevSong, playPause, selectGenreListId, remove , add,list } = playerSlice.actions;
+export const { setActiveSong, nextSong, prevSong, playPause, selectGenreListId, list } = playerSlice.actions;
 export default playerSlice.reducer;
