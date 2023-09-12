@@ -6,4 +6,6 @@
 ![player](https://github.com/eshanie-hub/React_music_player/assets/61816545/d3f26516-86a8-4882-8c61-d844d4da0cf5)
 
 ![favourite](https://github.com/eshanie-hub/React_music_player/assets/61816545/cbc6c569-584c-43e0-9ae0-c2120de1a81a)
-![trending](https://github.com/eshanie-hub/React_music_player/assets/61816545/3724051a-11ef-4d6e-aa18-055b0d3fe338)
+
+
+![trending](https://github.com/eshanie-hub/React_music_player/assets/61816545/564c380d-a3a4-44be-a2c6-2d2cbc5716be)
