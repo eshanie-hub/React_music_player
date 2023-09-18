@@ -27,7 +27,7 @@ const Home = () => {
           data = {data} 
           i={i}
           favorites={favorites}
-          is={checkedState[i]}
+          homeFav={checkedState[i]}
         />
       ))}
       </div>

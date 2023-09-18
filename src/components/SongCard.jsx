@@ -8,7 +8,7 @@ import LikeButton from './LikeButton';
 
 import { playPause, setActiveSong, list } from '../redux/features/playerSlice';
 
-const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, check, is }) => {
+const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, check, homeFav }) => {
   const {favorites} = useSelector((state) => state.player);
   const dispatch = useDispatch();
 
@@ -21,14 +21,14 @@ const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, check, is }) =
     dispatch(playPause(true));
   };
  
-  const [o, setO] = useState(() => {
-    const o = favorites.find((song) => song.key === is);
-    return o;
+  const [checkFav, setCheckFav] = useState(() => {
+    const checkFav = favorites.find((song) => song.key === homeFav);
+    return checkFav;
   })
 
   const handleLikeClick = () => {
-   setO((prevState) => !prevState);
-    dispatch(list({song, data, i,o}));     
+   setCheckFav((prevState) => !prevState);
+    dispatch(list({song, data, i,checkFav}));     
   };
 
   return (
@@ -54,7 +54,7 @@ const SongCard = ({ song, isPlaying, activeSong, data, i, isLike, check, is }) =
             handleLike={handleLikeClick}
             check={isLike}
             checkq={check}
-            isl={o}
+            like={checkFav}
            
             />
          </div>
